@@ -1,6 +1,7 @@
 using DemoUserAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,16 @@ namespace DemoUserAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44398")
+                            .WithHeaders("content-type")
+                            .WithMethods("GET", "POST");
+                    });
+            });
 
             services.AddDbContext<DemoUserAPIDbContext>(options => options.UseInMemoryDatabase("UsersDb"));
 
@@ -47,6 +58,8 @@ namespace DemoUserAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoUserAPI v1"));
             }
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseHttpsRedirection();
 

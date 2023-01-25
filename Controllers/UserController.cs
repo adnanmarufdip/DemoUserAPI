@@ -1,5 +1,6 @@
 ﻿using DemoUserAPI.Data;
 using DemoUserAPI.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
