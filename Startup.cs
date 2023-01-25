@@ -29,6 +29,8 @@ namespace DemoUserAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Cross-Origin Resource Sharing (CORS) policy configuration
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
@@ -59,7 +61,7 @@ namespace DemoUserAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoUserAPI v1"));
             }
 
-            app.UseCors("AllowSpecificOrigin");
+            app.UseCors("AllowSpecificOrigin"); // (CORS) policy
 
             app.UseHttpsRedirection();
 
